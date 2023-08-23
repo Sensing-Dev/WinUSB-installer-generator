@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  pull_request:
+    branches:
+      - master
+      
+jobs:
+  release-windows:
+    runs-on: windows-latest
+    matrix:
+      include:
+      - libwdi_version : 90278c5
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # for all commit, tags, and logs
+          fetch-depth: 0
+    - name: libwdi checkout
+      uses: actions/checkout@v3
+      with:
+        repository: pbatard/libwdi
+        path: libwdi
+        ref: ${{ matrix.libwdi_version }}
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1
+    - name: libwdi build
+      run: |
+        msbuild libwdi\libwdi.sln /m /p:Configuration=Release,Platform=x64
+    - name: winusb installer build
+      run: |
+        mkdir build && cd build
+        cmake -G "Visual Studio 16 2019" -A x64 ../ -DLIBWDI_DIR=${{ github.workspace }}\libwdi\x64\Release
+    - name: Release
+      uses: actions/upload-artifact@v3
+      with:
+        path: ${{ github.workspace }}\libwdi\x64\Release\*.exe
+        name: winusb-installer-${{github.ref_name }}-${{ secrets.GITHUB_TOKEN }}
