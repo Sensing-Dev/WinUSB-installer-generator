@@ -8,9 +8,6 @@ on:
 jobs:
   release-windows:
     runs-on: windows-latest
-    matrix:
-      include:
-      - libwdi_version : 90278c5
     steps:
       - uses: actions/checkout@v2
         with:
@@ -21,7 +18,7 @@ jobs:
         with:
           repository: pbatard/libwdi
           path: libwdi
-          ref: ${{ matrix.libwdi_version }}
+          ref: 90278c5
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v1
       - name: libwdi build
