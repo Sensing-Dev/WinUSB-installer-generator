@@ -1,0 +1,14 @@
+project(driver-install)
+
+cmake_minimum_required(VERSION 3.0)
+
+set(CMAKE_CXX_STANDARD 17)
+
+set(LIBWDI_DIR ${LIBWDI_ROOT})
+include_directories(${LIBWDI_DIR}/libwdi)
+link_directories(${LIBWDI_DIR}/x64/Release/dll)
+
+set(WINUSB_INSTALLER src/winusb_installer.c)
+add_executable(winusb_installer ${WINUSB_INSTALLER})
+target_compile_features(winusb_installer PUBLIC cxx_std_17)
+target_link_libraries(winusb_installer PRIVATE libwdi.lib)
