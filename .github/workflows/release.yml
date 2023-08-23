@@ -18,7 +18,7 @@ jobs:
         with:
           repository: pbatard/libwdi
           path: libwdi
-          ref: 90278c5
+          ref: 90278c538a8fb5fd82aab25ae7f5a9887ca468ce
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v1
       - name: libwdi build
