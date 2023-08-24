@@ -7,6 +7,7 @@ on:
 env:
   WDK_URL: https://go.microsoft.com/fwlink/p/?LinkID=253170
   LIBUSB_VER: 90278c538a8fb5fd82aab25ae7f5a9887ca468ce
+  BUILD_MACROS: '"WDK_DIR=\"../wdk/Windows Kits/8.0\""'
 jobs:
   release-windows:
     runs-on: windows-latest
@@ -19,6 +20,7 @@ jobs:
       - name: Download WDK
         shell: cmd
         run: |
+          mkdir libwdi && cd libwdi
           curl -L ${{ env.WDK_URL }} -o wdk-redist.msi
           msiexec /a wdk-redist.msi /qn TARGETDIR=%CD%\wdk
       - name: Checkout libwdi repository
@@ -31,7 +33,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1
       - name: libwdi build
         run: |
-          msbuild ./libwdi/libwdi.sln /m /p:Configuration=Release,Platform=x64,BuildMacros='WDK_DIR="${{ github.workspace }}/wdk/Windows\ Kits/8.0\""'
+          msbuild ./libwdi/libwdi.sln /m /p:Configuration=Release,Platform=x64,BuildMacros=${{ env.BUILD_MACROS }}
       - name: winusb installer build
         run: |
           mkdir build && cd build
