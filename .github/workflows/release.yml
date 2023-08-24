@@ -36,7 +36,9 @@ jobs:
         shell: bash
         run: |
           ls
+          echo ----------
           cd libwdi
+          echo ----------
           ls
           mv ../diff.patch diff.patch
           git apply ../diff.patch
