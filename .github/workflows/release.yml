@@ -34,7 +34,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1
       - name: libwdi build
         run: |
-          & msbuild ./libwdi/libwdi.sln /p:Configuration=Release,Platform=x64,BuildMacros=${{ env.BUILD_MACROS }}
+          & msbuild ./libwdi/libwdi.sln /p:Configuration=Release,Platform=x64,BuildMacros=${{ env.BUILD_MACROS }} /t:install_x64
       - name: winusb installer build
         run: |
           mkdir build && cd build
