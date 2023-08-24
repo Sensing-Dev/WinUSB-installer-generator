@@ -35,7 +35,10 @@ jobs:
       - name: Apply patch
         shell: bash
         run: |
+          ls
           cd libwdi
+          ls
+          mv ../diff.patch diff.patch
           git apply ../diff.patch
       - name: libwdi build
         run: |
