@@ -41,8 +41,7 @@ jobs:
       - name: libwdi build
         shell: bash
         run: |
-          cd libwdi
-          msbuild libwdi.sln
+          msbuild libwdi/libwdi.sln
       - name: winusb installer build
         run: |
           mkdir build && cd build
