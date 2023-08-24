@@ -32,6 +32,8 @@ jobs:
           ref: ${{ env.LIBUSB_VER }}
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v1
+        with:
+          vs-version: '[17.0)'
       - name: Apply patch
         shell: bash
         run: |
