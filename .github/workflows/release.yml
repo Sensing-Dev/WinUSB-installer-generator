@@ -31,7 +31,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1
       - name: libwdi build
         run: |
-          msbuild libwdi\libwdi.sln /m /p:Configuration=Release,Platform=x64,BuildMacros='"WDK_DIR=\"../wdk/Windows Kits/8.0\""'
+          msbuild libwdi\libwdi.sln /m /p:Configuration=Release,Platform=x64,BuildMacros='WDK_DIR="${{ github.workspace }}/wdk/Windows\ Kits/8.0\""'
       - name: winusb installer build
         run: |
           mkdir build && cd build
