@@ -32,6 +32,11 @@ jobs:
           ref: ${{ env.LIBUSB_VER }}
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v1
+      - name: Apply patch
+        shell: bash
+        run: |
+          cd libwdi
+          patch -p1 < ../diff.patch
       - name: libwdi build
         run: |
           & msbuild ./libwdi/libwdi.sln /p:BuildMacros=${{ env.BUILD_MACROS }}
