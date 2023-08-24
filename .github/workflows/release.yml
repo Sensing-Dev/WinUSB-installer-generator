@@ -41,7 +41,7 @@ jobs:
       - name: libwdi build
         run: |
           cd libwdi
-          msbuild libwdi.sln
+          msbuild libwdi.sln /p:Configuration=Release,Platform=x64
       - name: winusb installer build
         run: |
           mkdir build && cd build
