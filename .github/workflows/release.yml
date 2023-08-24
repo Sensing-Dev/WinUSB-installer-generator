@@ -42,8 +42,7 @@ jobs:
           git apply diff.patch
       - name: libwdi build
         run: |
-          cd libwdi
-          msbuild libwdi.sln /p:Configuration=Release,Platform=x64
+          msbuild libwdi/libwdi.sln /p:Configuration=Release,Platform=x64
       - name: winusb installer build
         run: |
           mkdir build && cd build
