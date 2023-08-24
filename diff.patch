@@ -1,19 +1,25 @@
-diff --git a/msvc/config.h b/msvc/config.h
-index c44d377..4d5da47 100644
---- a/msvc/config.h
-+++ b/msvc/config.h
-@@ -37,12 +37,12 @@
- 
- /* embed libusb0 driver files from the following location */
- #ifndef LIBUSB0_DIR
--#define LIBUSB0_DIR "D:/libusb-win32"
-+// #define LIBUSB0_DIR "D:/libusb-win32"
- #endif
- 
- /* embed libusbK driver files from the following location */
- #ifndef LIBUSBK_DIR
--#define LIBUSBK_DIR "D:/libusbK/bin"
-+// #define LIBUSBK_DIR "D:/libusbK/bin"
- #endif
- 
- /* embed user defined driver files from the following location */
+diff --git a/diff.patch b/diff.patch
+index 00e72a1..e69de29 100644
+--- a/diff.patch
++++ b/diff.patch
+@@ -1,20 +0,0 @@
+-t a/msvc/config.h b/msvc/config.h
+-index c44d377..4d5da47 100644
+---- a/msvc/config.h
+-+++ b/msvc/config.h
+-@@ -37,12 +37,12 @@
+- 
+-  /* embed libusb0 driver files from the following location */
+-   #ifndef LIBUSB0_DIR
+-   -#define LIBUSB0_DIR "D:/libusb-win32"
+-   +// #define LIBUSB0_DIR "D:/libusb-win32"
+-    #endif
+-     
+-      /* embed libusbK driver files from the following location */
+-       #ifndef LIBUSBK_DIR
+-       -#define LIBUSBK_DIR "D:/libusbK/bin"
+-       +// #define LIBUSBK_DIR "D:/libusbK/bin"
+-        #endif
+-	 
+-	  /* embed user defined driver files from the following location */
+-
