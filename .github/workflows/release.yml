@@ -32,12 +32,16 @@ jobs:
           ref: ${{ env.LIBUSB_VER }}
       - name: Add MSBuild to PATH
         uses: microsoft/setup-msbuild@v1
-      - name: libwdi build
+      - name: Apply patch
         shell: bash
         run: |
           cd libwdi
           mv ../diff.patch diff.patch
           git apply diff.patch
+      - name: libwdi build
+        shell: bash
+        run: |
+          cd libwdi
           msbuild libwdi.sln
       - name: winusb installer build
         run: |
