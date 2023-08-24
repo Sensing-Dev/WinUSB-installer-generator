@@ -7,7 +7,7 @@ on:
 env:
   WDK_URL: https://go.microsoft.com/fwlink/p/?LinkID=253170
   LIBUSB_VER: 90278c538a8fb5fd82aab25ae7f5a9887ca468ce
-  BUILD_MACROS: '"WDK_DIR=\"../wdk/Windows Kits/8.0\";LIBUSB0_DIR=\"../libusb0\";LIBUSBK_DIR=\"../libusbk/bin\""'
+  BUILD_MACROS: WDK_DIR=\"../wdk/Windows\ Kits/8.0\"
 
 jobs:
   release-windows:
