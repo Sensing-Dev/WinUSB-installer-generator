@@ -39,9 +39,9 @@ jobs:
           mv ../diff.patch diff.patch
           git apply diff.patch
       - name: libwdi build
-        shell: bash
         run: |
-          msbuild libwdi/libwdi.sln
+          cd libwdi
+          msbuild libwdi.sln
       - name: winusb installer build
         run: |
           mkdir build && cd build
