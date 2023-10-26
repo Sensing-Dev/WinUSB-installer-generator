@@ -1,0 +1,28 @@
+name: Sensing dev installer Build, Test
+
+on:
+  push:
+    branches:
+      #     - '*'  # This will run the build and test jobs for pull requests to all branches
+      - 'feature/8-build-aravis-in-workflow'  # This will run the build and test jobs for every push on all branches
+
+  # pull_request:
+  #   branches:
+  #     - '*'  # This will run the build and test jobs for pull requests to all branches
+
+
+jobs:
+  release:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Create and enter build directory
+        run: |
+          mkdir build
+          cd build
+

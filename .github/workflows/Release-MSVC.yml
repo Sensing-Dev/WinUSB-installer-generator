@@ -1,0 +1,30 @@
+name: Sensing dev installer Build and Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"  # vYY.MM.Patch example v23.08.00 etc.
+
+jobs:
+  release:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Create and enter build directory
+        run: |
+          mkdir build
+          cd build
+
+
+  
+      
+
+
+
+
+
