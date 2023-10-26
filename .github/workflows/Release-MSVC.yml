@@ -1,4 +1,4 @@
-name: Sensing dev installer Build and Release
+name: WinUSB installer Build and Release
 
 on:
   push:
