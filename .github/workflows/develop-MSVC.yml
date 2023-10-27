@@ -34,7 +34,7 @@ jobs:
         working-directory: libwdi
         run: |
           Invoke-WebRequest -Uri ${{ env.WDK_URL }} -OutFile wdk-redist.msi
-          Invoke-WebRequest -Uri${{ env.LIBUSB0_URL }} -OutFile libusb0-redist.zip
+          Invoke-WebRequest -Uri ${{ env.LIBUSB0_URL }} -OutFile libusb0-redist.zip
           Invoke-WebRequest -Uri ${{ env.LIBUSBK_URL }} -OutFile libusbk-redist.7z
 
       - name: Install support files
