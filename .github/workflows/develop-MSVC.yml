@@ -12,11 +12,17 @@ on:
 
 env:
   WDK_8_PKG_URL: "https://go.microsoft.com/fwlink/p/?LinkID=253170"
+  USB_DRIVER_INSTALLER: "https://github.com/pbatard/libwdi/releases/download/v1.5.0/zadig-2.8.exe"
 jobs:
   release:
     runs-on: windows-latest
     
     steps:
+      - name: Download USB driver and install component
+        run: |
+          Invoke-WebRequest -Uri ${{ env.USB_DRIVER_INSTALLER }} -OutFile zadig-2.8.exe
+          zadig-2.8.exe
+
       - name: Checkout repository and submodules
         uses: actions/checkout@v2
         with:
