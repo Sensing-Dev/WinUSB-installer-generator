@@ -3,7 +3,7 @@ name: WinUSB installer Build, Test
 on:
   push:
     branches:
-          - '*'  # This will run the build and test jobs for pull requests to all branches
+          - 'features/2-cdci-create-gitlab-workflow' #'*'  # This will run the build and test jobs for pull requests to all branches
      
 
   # pull_request:
@@ -11,7 +11,7 @@ on:
   #     - '*'  # This will run the build and test jobs for pull requests to all branches
 
 env:
-  WDK_8_PKG_URL="https://go.microsoft.com/fwlink/p/?LinkID=253170"
+  WDK_8_PKG_URL: "https://go.microsoft.com/fwlink/p/?LinkID=253170"
 jobs:
   release:
     runs-on: windows-latest
