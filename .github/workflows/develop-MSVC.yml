@@ -10,7 +10,8 @@ on:
   #   branches:
   #     - '*'  # This will run the build and test jobs for pull requests to all branches
 
-
+env:
+  WDK_8_PKG_URL="https://go.microsoft.com/fwlink/p/?LinkID=253170"
 jobs:
   release:
     runs-on: windows-latest
@@ -21,8 +22,13 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Create and enter build directory
+      - name: Create and enter the build directory
         run: |
           mkdir build
           cd build
+
+      - name: Download WDK 8 and install component
+        run: |
+          Invoke-WebRequest -Uri ${{ env.WDK_8_PKG_URL }} -OutFile wdfcoinstaller.msi
+          msiexec /i wdfcoinstaller.msi /qn /l*v install.log
 
