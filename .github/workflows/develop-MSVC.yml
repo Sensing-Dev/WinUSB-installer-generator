@@ -32,11 +32,15 @@ jobs:
 
       - name: Download support files
         working-directory: libwdi
-        shell: cmd
         run: |
-          curl -L ${{ env.WDK_URL }} -o wdk-redist.msi
-          curl -L ${{ env.LIBUSB0_URL }} -o libusb0-redist.zip
-          curl -L ${{ env.LIBUSBK_URL }} -o libusbk-redist.7z
+          Invoke-WebRequest -Uri ${{ env.WDK_URL }} -OutFile wdk-redist.msi
+          Invoke-WebRequest -Uri${{ env.LIBUSB0_URL }} -OutFile libusb0-redist.zip
+          Invoke-WebRequest -Uri ${{ env.LIBUSBK_URL }} -OutFile libusbk-redist.7z
+
+      - name: Install support files
+        working-directory: libwdi
+        shell: cmd
+        run: |          
           msiexec /a wdk-redist.msi /qn TARGETDIR=%CD%\wdk
           7z x libusb0-redist.zip
           7z x libusbk-redist.7z
