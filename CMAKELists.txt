@@ -34,5 +34,5 @@ target_link_libraries(winusb_installer PRIVATE getopt.lib)
 
 install(FILES  ${LIBWDI_DIR}/x64/Release/dll/libwdi.dll DESTINATION "." )
 install(FILES  ${CMAKE_BINARY_DIR}/Release/winusb_installer.exe DESTINATION "." )
-install(FILES  ${PROJECT_DIR}/COPYING_LGPL.txt DESTINATION "." )
-install(FILES  ${PROJECT_DIR}/COPYING.txt DESTINATION "." )
+install(FILES  ${PROJECT_DIR}/COPYING_LGPL DESTINATION "." )
+install(FILES  ${PROJECT_DIR}/COPYING DESTINATION "." )

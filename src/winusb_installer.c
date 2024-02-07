@@ -23,7 +23,7 @@ int main(int argc, char* argv[]){
     }
 
     vendor_id = (int)strtol(argv[1], NULL, 16);
-    printf("%i\n", vendor_id); 
+    printf("Targeted vernder id is %s\n", argv[1]); 
 
     // list all
     struct wdi_options_create_list option = {TRUE, TRUE, TRUE};
@@ -41,19 +41,20 @@ int main(int argc, char* argv[]){
                 };
 
                 if (wdi_prepare_driver(device, ".", "target_device.inf", &driver_option) == WDI_SUCCESS) {
+                    printf("********************************************************\n");
+                    printf("* This process may take up to 5 minutes... please wait *\n");
+                    printf("********************************************************\n");
                     wdi_install_driver(device, ".", "target_device.inf", NULL);
                 }
                 return 0;
             }else{
                 printf("\n");
             }
-
         }
 
         wdi_destroy_list(list);
     }else{
         printf("Faile\n");
     }
-
     return 0;
 }
