@@ -82,7 +82,7 @@ if (Test-Path $tempExtractionPath) {
         
     New-item -Path "$TempDir" -ItemType Directory
     $winUSBOptions = @{
-        FilePath               = "${tempExtractionPath}/${installerName}-${versionNum}/winusb_installer.exe"
+        FilePath               = "${tempExtractionPath}/${installerName}-${version}/winusb_installer.exe"
         ArgumentList           = "$VenderId"
         WorkingDirectory       = "$TempDir"
         Wait                   = $true
