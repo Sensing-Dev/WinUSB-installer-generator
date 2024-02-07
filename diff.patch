@@ -1,0 +1,47 @@
+diff --git a/libwdi.sln b/libwdi.sln
+index c5f15f9..8603372 100644
+--- a/libwdi.sln
++++ b/libwdi.sln
+@@ -70,6 +70,7 @@ Global
+ 		{79275348-41A4-4D07-8990-4068C9594A2C}.Debug|x64.ActiveCfg = Debug|x64
+ 		{79275348-41A4-4D07-8990-4068C9594A2C}.Release|Win32.ActiveCfg = Release|Win32
+ 		{79275348-41A4-4D07-8990-4068C9594A2C}.Release|x64.ActiveCfg = Release|x64
++		{79275348-41A4-4D07-8990-4068C9594A2C}.Release|x64.Build.0 = Release|x64
+ 		{9B1C561E-F95B-4849-A7AA-A4350E227C20}.Debug|Win32.ActiveCfg = Debug|Win32
+ 		{9B1C561E-F95B-4849-A7AA-A4350E227C20}.Debug|Win32.Build.0 = Debug|Win32
+ 		{9B1C561E-F95B-4849-A7AA-A4350E227C20}.Debug|x64.ActiveCfg = Debug|Win32
+diff --git a/msvc/config.h b/msvc/config.h
+index c44d377..e9573e0 100644
+--- a/msvc/config.h
++++ b/msvc/config.h
+@@ -23,7 +23,8 @@
+  * match your WinUSB redist directories.
+  */
+ #ifndef WDK_DIR
+-#define WDK_DIR "C:/Program Files (x86)/Windows Kits/8.0"
++// #define WDK_DIR "C:/Users/momoko/cambria/tmp/winusb-test/wdk/windows-kit/8.0"
++#define WDK_DIR "../../wdk/windows-kits/8.0"
+ #endif
+ 
+ /* WDK WDF coinstaller version */
+@@ -36,14 +37,14 @@
+ #define X64_DIR "x64"
+ 
+ /* embed libusb0 driver files from the following location */
+-#ifndef LIBUSB0_DIR
+-#define LIBUSB0_DIR "D:/libusb-win32"
+-#endif
++// #ifndef LIBUSB0_DIR
++// #define LIBUSB0_DIR "D:/libusb-win32"
++// #endif
+ 
+ /* embed libusbK driver files from the following location */
+-#ifndef LIBUSBK_DIR
+-#define LIBUSBK_DIR "D:/libusbK/bin"
+-#endif
++// #ifndef LIBUSBK_DIR
++// #define LIBUSBK_DIR "D:/libusbK/bin"
++// #endif
+ 
+ /* embed user defined driver files from the following location */
+ #ifndef USER_DIR

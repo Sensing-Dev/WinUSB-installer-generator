@@ -1,14 +1,38 @@
-project(driver-install)
+cmake_minimum_required(VERSION 3.18)
 
-cmake_minimum_required(VERSION 3.0)
+project(driver-install)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(PROJECT_DIR ${PROJECT_ROOT})
 set(LIBWDI_DIR ${LIBWDI_ROOT})
+
+message("CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
+
 include_directories(${LIBWDI_DIR}/libwdi)
 link_directories(${LIBWDI_DIR}/x64/Release/dll)
+link_directories(${LIBWDI_DIR}/x64/Release/lib)
+
+if(NOT EXISTS "${LIBWDI_DIR}/x64/Release/lib/libwdi.lib")
+   message("libwdi.lib does not exist")
+endif()
+
+if(NOT EXISTS "${LIBWDI_DIR}/x64/Release/lib/getopt.lib")
+   message("getopt.lib does not exist")
+endif()
+
+if(NOT EXISTS "${LIBWDI_DIR}/x64/Release/dll/libwdi.dll")
+   message("libwdi.dll does not exist")
+endif()
 
 set(WINUSB_INSTALLER src/winusb_installer.c)
 add_executable(winusb_installer ${WINUSB_INSTALLER})
 target_compile_features(winusb_installer PUBLIC cxx_std_17)
+
 target_link_libraries(winusb_installer PRIVATE libwdi.lib)
+target_link_libraries(winusb_installer PRIVATE getopt.lib)
+
+install(FILES  ${LIBWDI_DIR}/x64/Release/dll/libwdi.dll DESTINATION "." )
+install(FILES  ${CMAKE_BINARY_DIR}/Release/winusb_installer.exe DESTINATION "." )
+install(FILES  ${PROJECT_DIR}/COPYING_LGPL.txt DESTINATION "." )
+install(FILES  ${PROJECT_DIR}/COPYING.txt DESTINATION "." )
