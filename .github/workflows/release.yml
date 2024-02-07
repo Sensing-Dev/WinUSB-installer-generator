@@ -56,10 +56,9 @@ jobs:
         run: |
           cd build
           cmake --install .
-          set PACKAGE_VERSION=${{ github.ref_name }}
-          set PACKAGE_VERSION=%PACKAGE_VERSION:~1%
-          rename "package_contents" "WinUSB-installer-generator-%PACKAGE_VERSION%"
-          tar -caf "WinUSB-installer-generator-%PACKAGE_VERSION%".zip "WinUSB-installer-generator-%PACKAGE_VERSION%"
+          rename package_contents WinUSB-installer-generator-${{ github.ref_name }}
+          tar -caf WinUSB-installer-generator-${{ github.ref_name }}.zip WinUSB-installer-generator-${{ github.ref_name }}
+      - name: Release      
       - name: Release      
         uses: softprops/action-gh-release@v1
         with:
