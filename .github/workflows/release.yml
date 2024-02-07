@@ -63,3 +63,4 @@ jobs:
         with:
           files: |
             build/WinUSB-installer-generator-*.zip
+            generate_and_apply_WinUSB.ps1
