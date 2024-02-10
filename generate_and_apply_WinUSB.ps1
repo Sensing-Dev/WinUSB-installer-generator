@@ -8,6 +8,9 @@
 .PARAMETER VenderId
     The vender ID provided by the user.
 
+.PARAMETER ProductId
+    The product ID provided by the user.
+
 .EXAMPLE
     .\generate_and_apply_WinUSB.ps1 <vendor id>
     Prompts the user for a vender ID and displays the entered vender ID.
@@ -19,11 +22,13 @@
 
 param (
     [Parameter(Mandatory=$true)]
-    [string]$VenderId
+    [string]$VenderId,
+    [string]$ProductId
 )
 
 # Vender ID of the target USB device
 Write-Host "You entered vender ID: $VenderId"
+Write-Host "You entered product ID: $ProductId"
 
 # Working Directory
 $installPath = "$env:TEMP"
@@ -71,7 +76,7 @@ if ($Url.EndsWith("zip")) {
     throw "Target archive does not exit."
 }
 
-# Generate WinUSB Installer
+# Generate and apply WinUSB Installer
 if (Test-Path $tempExtractionPath) {    
 
     # Run Winusb installer
@@ -83,7 +88,7 @@ if (Test-Path $tempExtractionPath) {
     New-item -Path "$TempDir" -ItemType Directory
     $winUSBOptions = @{
         FilePath               = "${tempExtractionPath}/${installerName}-${version}/winusb_installer.exe"
-        ArgumentList           = "$VenderId"
+        ArgumentList           = "$VenderId $ProductId"
         WorkingDirectory       = "$TempDir"
         Wait                   = $true
         Verb                   = "RunAs"  # This attempts to run the process as an administrator
@@ -94,31 +99,6 @@ if (Test-Path $tempExtractionPath) {
     Write-Verbose "End winUsb installer"
 }else{
     throw "Failed to execute WinUSB Installer Generator."
-}
-
-# Run Driver installer
-Write-Verbose "Start Driver installer"
-
-$infPath = "$TempDir/target_device.inf"
-if (-not (Test-Path -Path $infPath -PathType Leaf) ){
-    Write-Error "$infPath does not exist."
-}
-else{
-    $pnputilOptions = @{
-        FilePath = "PNPUtil"
-        ArgumentList           = "-i -a ./target_device.inf"
-        WorkingDirectory       = "$TempDir"
-        Wait                   = $true
-        Verb                   = "RunAs"  # This attempts to run the process as an administrator
-    }
-    try {
-        # Start Pnputil process 
-        Start-Process @pnputilOptions 
-        Write-Host "Sucessfully installed winUSB driver"
-    }
-    catch {
-        Write-Error "An error occurred while running pnputil: $_"
-    }
 }
 
 # delete temp files
