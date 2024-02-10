@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include<stdbool.h>
+#include <stdbool.h>
 #include <libwdi.h>
 
 #include <stdio.h>
@@ -17,23 +17,33 @@ int main(int argc, char* argv[]){
 
     bool find_target_device = false;
     int vendor_id = 0;
+    int product_id = 0;
 
-    if (argc != 2){
-        usage("missing argument for parameter");
+    if (argc != 3){
+        printf( "missing argument for parameter" ); 
+        return 1;
     }
 
     vendor_id = (int)strtol(argv[1], NULL, 16);
-    printf("Targeted vernder id is %s\n", argv[1]); 
+    product_id = (int)strtol(argv[2], NULL, 16);
+    printf("Targeted vernder id is %s and product id is %s\n", argv[1], argv[2]); 
 
     // list all
+    // https://github.com/pbatard/libwdi/wiki/Usage#struct-wdi_options_create_list
     struct wdi_options_create_list option = {TRUE, TRUE, TRUE};
 
     if (wdi_create_list(&list, &option) == WDI_SUCCESS) {
         for (device = list; device != NULL; device = device->next) {
-            printf("Installing driver for USB device: \"%s\" (%04X:%04X)",
-                device->desc, device->vid, device->pid);
-            if (device->vid == vendor_id){
-                printf(" <-- these are the target\n");
+            if (device->vid == vendor_id && device->pid == product_id){
+                printf("Installing driver on USB device: \"%s\" (%04X:%04X)",
+                    device->desc, device->vid, device->pid );
+                    if (device->is_composite){
+                        printf("COMPOSITE %u\n", device->mi);
+                    }else{
+                        printf("\n");
+                    }
+                
+            // if (device->vid == vendor_id && device->pid == product_id){
 
                 struct wdi_options_prepare_driver driver_option ={
                     WDI_WINUSB, 
@@ -46,15 +56,14 @@ int main(int argc, char* argv[]){
                     printf("********************************************************\n");
                     wdi_install_driver(device, ".", "target_device.inf", NULL);
                 }
-                return 0;
             }else{
-                printf("\n");
+                // printf("\n");
             }
         }
 
         wdi_destroy_list(list);
     }else{
-        printf("Faile\n");
+        printf("Failed\n");
     }
     return 0;
 }
