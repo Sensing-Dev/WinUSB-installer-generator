@@ -34,27 +34,27 @@ int main(int argc, char* argv[]){
 
     if (wdi_create_list(&list, &option) == WDI_SUCCESS) {
         for (device = list; device != NULL; device = device->next) {
+
             if (device->vid == vendor_id && device->pid == product_id){
-                printf("Installing driver on USB device: \"%s\" (%04X:%04X)",
-                    device->desc, device->vid, device->pid );
-                    if (device->is_composite){
-                        printf("COMPOSITE %u\n", device->mi);
-                    }else{
-                        printf("\n");
-                    }
                 
-            // if (device->vid == vendor_id && device->pid == product_id){
+                // Note that compoite device has its parent and this will generate and apply WinUSB driver on parent
+                // Composite Parents returns is_composite false while its componends (each interface) returns true.
+                if ( !device->is_composite ){
+                    printf("Detect composite parent of USB device \"%s\" (%04X:%04X)\n", device->desc, device->vid, device->pid);
+                    // Assume that all U3V Camera devices is composite device and has composite parent
+                    struct wdi_options_prepare_driver driver_option ={
+                        WDI_WINUSB, 
+                        wdi_get_vendor_name(device->vid)
+                    };
 
-                struct wdi_options_prepare_driver driver_option ={
-                    WDI_WINUSB, 
-                    wdi_get_vendor_name(device->vid)
-                };
-
-                if (wdi_prepare_driver(device, ".", "target_device.inf", &driver_option) == WDI_SUCCESS) {
-                    printf("********************************************************\n");
-                    printf("* This process may take up to 5 minutes... please wait *\n");
-                    printf("********************************************************\n");
-                    wdi_install_driver(device, ".", "target_device.inf", NULL);
+                    if (wdi_prepare_driver(device, ".", "target_device.inf", &driver_option) == WDI_SUCCESS) {
+                        printf("********************************************************\n");
+                        printf("* This process may take up to 5 minutes... please wait *\n");
+                        printf("********************************************************\n");
+                        wdi_install_driver(device, ".", "target_device.inf", NULL);
+                    }
+                }else{
+                    printf("Detect composite device \"%s\" (%04X:%04X) but not composite parent... skip\n", device->desc, device->vid, device->pid);
                 }
             }else{
                 // printf("\n");
@@ -64,6 +64,7 @@ int main(int argc, char* argv[]){
         wdi_destroy_list(list);
     }else{
         printf("Failed\n");
+        return 1;
     }
     return 0;
 }
